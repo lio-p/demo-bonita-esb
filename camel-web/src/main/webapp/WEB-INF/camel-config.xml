@@ -11,18 +11,34 @@
        http://camel.apache.org/schema/spring/camel-spring.xsd">
 
        <camelContext xmlns="http://camel.apache.org/schema/spring">
-
-          <route id="helloRoute">
-            <!-- incoming requests from the servlet is routed -->
-            <from uri="activemq:bonitaQueue"/>
-            <to uri="log:org.bonitasoft.esb.demo?level=DEBUG"/>
-            <to uri="mock:result" />
+          <route id="fileToJMS">
+            <from uri="file:/Users/lionel/Bonita/Adoption/demo/esb_integration/bucket"/>
+            <to uri="activemq:bonitaQueue"/>
           </route>
-
         </camelContext>
+
+       <camelContext xmlns="http://camel.apache.org/schema/spring">
+          <route id="JMSToBonita">
+            <!-- incoming requests from the servlet is routed -->
+        	<from uri="activemq:bonitaQueue"/>
+            <to uri="wordDocumentExtractor"/>
+            <to uri="log:org.bonitasoft.esb.demo?level=INFO"/>
+            <to uri="bonita:startCase?hostname=localhost&amp;port=8080&amp;processName=Claims-management-esb"/>
+          </route>
+        </camelContext>
+        
+         <camelContext xmlns="http://camel.apache.org/schema/spring">
+          <route id="JMSToFile">
+            <from uri="activemq:folderQueue"/>
+            <to uri="file:/Users/lionel/Bonita/Adoption/demo/esb_integration/received"/>
+          </route>
+        </camelContext>
+        
+        <bean id="wordDocumentExtractor" class="org.bonitasoft.esb.bean.WordDocumentExtractorBean"/>
 
         <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
           <property name="brokerURL" value="tcp://localhost:61616"/>
+          <property name="userName" value="user"/>
+          <property name="password" value="bpm"/>
         </bean>
-
 </beans>
