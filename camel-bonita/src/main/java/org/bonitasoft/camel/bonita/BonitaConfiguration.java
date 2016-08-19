@@ -2,7 +2,6 @@ package org.bonitasoft.camel.bonita;
 
 import java.util.Map;
 
-import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
 import org.bonitasoft.camel.bonita.util.BonitaOperation;
@@ -10,13 +9,13 @@ import org.bonitasoft.camel.bonita.util.BonitaOperation;
 public class BonitaConfiguration {
 	
 	// Specific Bonita operation for the component
-    @UriPath @Metadata(required = "true")
+    @UriPath 
     private BonitaOperation operation;
     
-    @UriParam(defaultValue="localhost")
+    @UriParam
     private String hostname = "localhost";
     
-    @UriParam(defaultValue="8080")
+    @UriParam
 	private String port = "8080";
     
     @UriParam

@@ -19,50 +19,53 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+
+
  	<groupId>org.bonitasoft.camel</groupId>
     <artifactId>camel-bonita</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Camel Bonita</name>
+    <name>camel-bonita</name>
     <description>Camel Bonita support</description>
     
 	  <properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	   <camel.version>2.17.1</camel.version>
 	  </properties>
 
    <dependencies>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>
-      <version>2.17.2</version>
+      <version>${camel.version}</version>
     </dependency>
     
     <!-- support camel documentation -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>apt</artifactId>
-      <version>2.17.2</version>
+      <version>${camel.version}</version>
     </dependency>
 
     <!-- logging -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.7.21</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.21</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-      <scope>test</scope>
-    </dependency>
+<!--     <dependency> -->
+<!--       <groupId>org.slf4j</groupId> -->
+<!--       <artifactId>slf4j-api</artifactId> -->
+<!--       <version>1.7.21</version> -->
+<!--     </dependency> -->
+<!--     <dependency> -->
+<!--       <groupId>org.slf4j</groupId> -->
+<!--       <artifactId>slf4j-log4j12</artifactId> -->
+<!--       <version>1.7.21</version> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
+<!--     <dependency> -->
+<!--       <groupId>log4j</groupId> -->
+<!--       <artifactId>log4j</artifactId> -->
+<!--       <version>1.2.17</version> -->
+<!--       <scope>test</scope> -->
+<!--     </dependency> -->
     
     <!--  bonita client -->
     <dependency>
@@ -75,7 +78,7 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test</artifactId>
-      <version>2.17.2</version>
+      <version>2.15.1</version>
       <scope>test</scope>
     </dependency>
     
@@ -137,8 +140,9 @@
 <!--         <extensions>true</extensions> -->
 <!--         <configuration> -->
 <!--           <instructions> -->
-<!--             <Bundle-SymbolicName>org.bonitasoft.camel.bonitaComponent</Bundle-SymbolicName> -->
+<!--             <Bundle-SymbolicName>org.bonitasoft.camel.bonita.bonitaComponent</Bundle-SymbolicName> -->
 <!--             <Export-Service>org.apache.camel.spi.ComponentResolver;component=bonita</Export-Service> -->
+<!--             <Export-Package>org.bonitasoft.engine.*,org.apache.http.*,com.bonitasoft.engine.*,org.apache.commons.lang3.*</Export-Package> -->
 <!--           </instructions> -->
 <!--         </configuration> -->
 <!--       </plugin> -->

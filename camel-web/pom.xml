@@ -65,6 +65,12 @@
        <version>${activemq.version}</version>
     </dependency>
     
+       <!--  bonita client -->
+    <dependency>
+	    <groupId>org.bonitasoft.engine</groupId>
+	    <artifactId>bonita-client</artifactId>
+	    <version>7.2.4</version>
+	</dependency>
     
 
     <dependency>

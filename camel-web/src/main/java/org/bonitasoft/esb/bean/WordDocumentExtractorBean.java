@@ -46,7 +46,7 @@ public class WordDocumentExtractorBean {
 			
 			HashMap<String, Serializable> claim = new HashMap<String, Serializable>();
 			claim.put("number", "1");
-			claim.put("needReview", true);
+			//claim.put("needReview", true);
 			//claim.put("customerId", customerReference);
 			
 			result.put("letter", fileInput);

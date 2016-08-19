@@ -24,10 +24,6 @@ public class BonitaComponentTest extends CamelTestSupport {
 	@Produce(uri = "direct:start")
 	protected ProducerTemplate template;
 
-	@Override
-	public boolean isDumpRouteCoverage() {
-		return true;
-	}
 
 	@Test
 	public void testStartProcess() throws Exception {
