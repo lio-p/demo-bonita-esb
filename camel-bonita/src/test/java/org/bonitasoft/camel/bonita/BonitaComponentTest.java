@@ -13,7 +13,6 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
 import org.junit.Test;
 
 public class BonitaComponentTest extends CamelTestSupport {
@@ -29,19 +28,9 @@ public class BonitaComponentTest extends CamelTestSupport {
 	public void testStartProcess() throws Exception {
 		String processName = "testProcess";
 		Map<String, Serializable> variables = new HashMap<>();
-		Path path = Paths.get("/Users/lionel/Bonita/Adoption/demo/esb_integration/Claims-letter.docx");
-		byte[] data = Files.readAllBytes(path);
-		FileInputValue fileInput = new FileInputValue("Claims-letter.docx", data);
 		
-		HashMap<String, Serializable> claim = new HashMap<>();
-		claim.put("number", "1");
-		claim.put("needReview", true);
-		claim.put("customerId", "1");
+		variables.put("input1", "test");
 		
-		variables.put("letter", fileInput);
-		variables.put("claimInput", claim);
-		
-		//resultEndpoint.expectedBodyReceived(variables);
 	
 		template.sendBodyAndHeader(variables, "processName", processName);
 	
@@ -54,7 +43,7 @@ public class BonitaComponentTest extends CamelTestSupport {
 	protected RouteBuilder createRouteBuilder() {
 		return new RouteBuilder() {
 				public void configure() {
-					from("direct:start").to("bonita:startCase?hostname=localhost&processName=testProcess").to("mock:result");
+					from("direct:start").to("bonita:startCase?hostname=localhost&username=install&password=install&processName=TestNameTask").to("mock:result");
 				}
 		};
 	}

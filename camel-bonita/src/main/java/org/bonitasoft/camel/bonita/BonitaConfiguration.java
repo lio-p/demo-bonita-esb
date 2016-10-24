@@ -21,6 +21,12 @@ public class BonitaConfiguration {
     @UriParam
     private String processName;
     
+    @UriParam
+    private String username;
+    
+    @UriParam
+    private String password;
+    
     
     public String getHostname() {
 		return hostname;
@@ -62,6 +68,22 @@ public class BonitaConfiguration {
 		if (parameters.get("port") != null) this.port = (String) parameters.get("port");
 		if (parameters.get("processName") != null) this.processName = (String) parameters.get("processName");
 
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

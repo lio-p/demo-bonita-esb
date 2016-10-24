@@ -13,7 +13,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.bonitasoft.engine.bpm.contract.FileInputValue;
 
 public class WordDocumentExtractorBean {
 
@@ -42,12 +41,12 @@ public class WordDocumentExtractorBean {
 			String customerReference = matcher.group(1);
 			System.out.println(customerReference);
 
-			FileInputValue fileInput = new FileInputValue(filename, fileBytes);
+			HashMap<String,Serializable> fileInput = new HashMap<String,Serializable>();
+			fileInput.put("fileName", filename);
+			fileInput.put("content", fileBytes);
 			
 			HashMap<String, Serializable> claim = new HashMap<String, Serializable>();
 			claim.put("number", "1");
-			//claim.put("needReview", true);
-			//claim.put("customerId", customerReference);
 			
 			result.put("letter", fileInput);
 			result.put("claimInput", claim);

@@ -12,33 +12,43 @@
 
        <camelContext xmlns="http://camel.apache.org/schema/spring">
           <route id="fileToJMS">
-            <from uri="file:/Users/lionel/Bonita/Adoption/demo/esb_integration/bucket"/>
+            <from uri="file:<BUCKET_FOLDER>"/>
             <to uri="activemq:bonitaQueue"/>
           </route>
         </camelContext>
 
        <camelContext xmlns="http://camel.apache.org/schema/spring">
           <route id="JMSToBonita">
-            <!-- incoming requests from the servlet is routed -->
+			<!-- incoming requests from the servlet is routed -->
         	<from uri="activemq:bonitaQueue"/>
             <to uri="wordDocumentExtractor"/>
             <to uri="log:org.bonitasoft.esb.demo?level=INFO"/>
-            <to uri="bonita:startCase?hostname=localhost&amp;port=8080&amp;processName=Claims-management-esb"/>
+            <to uri="bonita:startCase?hostname=localhost&amp;port=8080&amp;processName=Claims-management-esb&amp;username=install&amp;password=install"/>
           </route>
         </camelContext>
-        
+
          <camelContext xmlns="http://camel.apache.org/schema/spring">
           <route id="JMSToFile">
             <from uri="activemq:folderQueue"/>
-            <to uri="file:/Users/lionel/Bonita/Adoption/demo/esb_integration/received"/>
+            <to uri="file:<RECEIVED_FOLDER>"/>
+            <setHeader headerName="CamelCMISFolderPath">
+            	<simple>/bonita/claims-storage</simple>
+            </setHeader>
+            <setHeader headerName="cmis:name">
+            	<simple>${header.CamelFileName}</simple>
+            </setHeader>
+            <setHeader headerName="cmis:contentStreamMimeType">
+            	<simple>application/msword</simple>
+            </setHeader>
+            <to uri="cmis://http://192.168.99.100:32768/alfresco/api/-default-/public/cmis/versions/1.1/atom?username=admin&amp;password=admin&amp;repositoryId=-default-"/>
           </route>
         </camelContext>
-        
+
         <bean id="wordDocumentExtractor" class="org.bonitasoft.esb.bean.WordDocumentExtractorBean"/>
 
         <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
           <property name="brokerURL" value="tcp://localhost:61616"/>
-          <property name="userName" value="user"/>
+          <property name="username" value="user"/>
           <property name="password" value="bpm"/>
         </bean>
 </beans>
