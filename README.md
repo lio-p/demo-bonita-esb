@@ -6,6 +6,7 @@ This repository contains the materials to build a demo to show the integration o
 
   - Active MQ
   - Apache Camel
+  - Alfresco
 
 ## Setup
 
@@ -36,6 +37,16 @@ This repository contains the materials to build a demo to show the integration o
  - Startup Tomcat
  - To check camel-web is up and running, open a browser and go to http://localhost:8080/camel-web
 
+#### Alfresco
+
+There are different ways to get a instance of Alfresco server. In my case, I chose to use a Docker image that I run locally. You could also install Alfresco on your machine or use a cloud instance. In this chapter, I will describe the solution using Docker. 
+
+  - Get Docker image: docker pull gui81/alfresco
+  - Create a new container: docker run --name='alfresco-esb' -it --rm -p 32768:8080 -p 32771:445 -p 32770:7070 -p 32769:8009 -p 32775:21 -p 32774:137 -p 32773:138 -p 32772:139 gui81/alfresco
+  - Access the Alfresco web client: http://192.168.99.100:32768/share
+  - Login using the default credential: admin/admin
+  - Create a new folder called "bonita" (Go to My Files, create new). 
+  - Under bonita, create another folder called "claims-storage". 
 
 ## Testing
 
