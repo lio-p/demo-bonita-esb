@@ -7,6 +7,7 @@ This repository contains the materials to build a demo to show the integration o
   - Active MQ
   - Apache Camel
   - Alfresco
+  - Bonita Studio 7.3.2
 
 ## Setup
 
@@ -26,7 +27,6 @@ This repository contains the materials to build a demo to show the integration o
     - In the administration console, go to Queues
     - In the text field, enter bonitaQueue and click on "Create"
 
-
 #### Apache Camel
 
  - Go to camel-web and run the command to build the web application:
@@ -45,13 +45,40 @@ There are different ways to get a instance of Alfresco server. In my case, I cho
   - Create a new container: docker run --name='alfresco-esb' -it --rm -p 32768:8080 -p 32771:445 -p 32770:7070 -p 32769:8009 -p 32775:21 -p 32774:137 -p 32773:138 -p 32772:139 gui81/alfresco
   - Access the Alfresco web client: http://192.168.99.100:32768/share
   - Login using the default credential: admin/admin
-  - Create a new folder called "bonita" (Go to My Files, create new). 
-  - Under bonita, create another folder called "claims-storage". 
+  - Create a new folder called "bonita" (Go to My Files, create new) 
+  - Under "bonita" folder, create another folder called "claims-storage"
+  
+#### Bonita Studio
 
-## Testing
+The version of the process (process/Claims-management-esb-1.0.bos) provided is 7.3.2 Community Edition. You can download the Bonita Studio [here](http://www.bonitasoft.com/downloads-v2).
 
-In that version, the Camel app listen to the queue "bonitaQueue". To test the integration between ActiveMQ and Camel, we will send a message in the bonitaQueue and check that Camel is consuming the message from the queue.
--  Log in the Active MQ Administration console: http://localhost:8161/admin
-- Go to Queues, locate the queue "bonitaQueue" and click on "send"
-- Leave the default options and click on send
-- Go to your tomcat folder and open the log file catalina.out. You should see debug messages that indicate the message has been consumed. In addition of that, you should see in the ActiveMQ Administration console that the message has been consumed. 
+  - Start the Studio
+  - Import the bos file Claims-management-esb-1.0.bos
+  - Click on Run to deploy the process in the local portal (http://localhost:8080/bonita)
+  
+#### Camel web app
+
+The route camel are hosted by a web application, called camel-web in our case. 
+
+  - To build the web application camel-web, go to camel-web folder and run: mvn clean install
+  - Deploy the war file generated, located in the target folder, in a local Tomcat instance. I will suggest to just download a fresh Tomcat server for the test. You can download it from [here](https://tomcat.apache.org/download-80.cgi)
+  
+Note: As Bonita Portal, already run on the port 8080, please make sure that this Tomcat instance ran on a different port. By example, the port 8191. 
+
+You need to configure two folders for the camel route to work:
+  - A "bucket" folder where a Camel route will pick up files and push them to the JMS queue. Will call it BUCKET_FOLDER
+  - A "received" folder where a Camel route will push files at the end of the demo. Will call it RECEIVED_FOLDER
+
+Please create these folders on your local machine and then modify the file camel-web/src/main/webapp/WEB_INF/camel-config.xml to provide the real path for BUCKET_FOLDER and RECEIVED_FOLDER. Build and deploy camel-web after the changes. 
+  
+## Run the demo
+
+  - Push the file test-files/Claims-Letter.docx to your BUCKET_FOLDER. The file should disappear immediately or after a few seconds. 
+  - Go to Bonita Portal, log in as walter.bates. You should have new task ready to perform. 
+  - Perform the task Verify Claims compliance. Click on Accepted.
+  - A new task will be created: Process Claims. Attach the document test-files/Return_letter.docx as response letter and process it. 
+  - Logout and log in as helen.kelly. 
+  - A task Review claim should be present. Open it and click on Accept.  
+  - Go to Alfresco, you should see a new folder under /bonita/claims-storage. This folder contains the response letter.
+  - Go to your local folder RECEIVED_FOLDER, this folder should contains the response letter as well.
+   
