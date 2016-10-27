@@ -12,7 +12,7 @@
 
        <camelContext xmlns="http://camel.apache.org/schema/spring">
           <route id="fileToJMS">
-            <from uri="file:/Users/lionel/Bonita/Adoption/demo/esb_integration/bucket"/>
+            <from uri="file:<BUCKET_FOLDER>"/>
             <to uri="activemq:bonitaQueue"/>
           </route>
         </camelContext>
@@ -30,7 +30,7 @@
          <camelContext xmlns="http://camel.apache.org/schema/spring">
           <route id="JMSToFile">
             <from uri="activemq:folderQueue"/>
-            <to uri="file:/Users/lionel/Bonita/Adoption/demo/esb_integration/received"/>
+            <to uri="file:<RECEIVED_FOLDER>"/>
             <setHeader headerName="CamelCMISFolderPath">
             	<simple>/bonita/claims-storage</simple>
             </setHeader>
