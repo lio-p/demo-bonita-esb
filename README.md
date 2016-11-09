@@ -8,6 +8,7 @@ This repository contains the materials to build a demo to show the integration o
   - Apache Camel
   - Alfresco
   - Bonita Studio 7.3.2
+  - Java 8
 
 ## Setup
 
@@ -58,7 +59,11 @@ The version of the process (process/Claims-management-esb-1.0.bos) provided is 7
 
   - Start the Studio
   - Import the bos file Claims-management-esb-1.0.bos
-  - Click on Run to deploy the process in the local portal (http://localhost:8080/bonita)
+  - Import the bos file initData-1.0.bos
+  - Open the process initData-1.0
+  - Click on Run to start the process initData. Click on the Start button on the web page opened to execute it.
+  - Open the process Claims-management-esb-1.0
+  - Click on Run to deploy the process in the local portal (http://localhost:8080/bonita). Don't execute it. 
   
 #### Camel web app
 
